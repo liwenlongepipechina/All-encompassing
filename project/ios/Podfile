@@ -81,6 +81,8 @@ target 'project' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'react-native-fingerprint-scanner', :path => '../node_modules/react-native-fingerprint-scanner'
+
   target 'projectTests' do
     inherit! :complete
     # Pods for testing
