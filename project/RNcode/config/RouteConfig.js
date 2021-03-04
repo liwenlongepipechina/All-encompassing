@@ -1,26 +1,19 @@
 import React from 'react';
 import {
-  ActivityIndicator,
-  AsyncStorage,
-  Button,
-  StatusBar,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
-import {
   createStackNavigator,
   createSwitchNavigator,
   createAppContainer,
 } from 'react-navigation';
 
-import WelcomeScreen from '../containers/welcome/WelcomeScreen'
-import Login from '../containers/login/Login'
+import WelcomeScreen from '../containers/welcome/WelcomeScreen';
+import Login from '../containers/login/Login';
+import Test from '../containers/test/Test';
 
-
-const AppStack = createStackNavigator(
-    {
-  Login: Login,
+const AppStack = createStackNavigator({
+    Test: Test,
+    Login: Login,
+},{
+    initialRouteName: 'Login',
 });
 
 export default createAppContainer(
