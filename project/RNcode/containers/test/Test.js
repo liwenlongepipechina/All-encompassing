@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import BiometricPopup from '../components/BiometricPopup/BiometricPopup';
 
 class Test extends React.Component {
   static navigationOptions = {
@@ -17,11 +16,6 @@ class Test extends React.Component {
     return (
       <View>
         <Text>{`测试页面+${this.s}`}</Text>
-        <BiometricPopup
-          onAuthenticate={() => {
-            alert('该登陆了');
-          }}
-        />
       </View>
     );
   }
