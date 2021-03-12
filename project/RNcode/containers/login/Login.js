@@ -13,6 +13,7 @@ import {
     Dimensions,
     ScrollView,
     TouchableHighlight, AppState, Image,
+    NativeModules,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
@@ -74,6 +75,10 @@ class Login extends React.Component {
     onPress = () => {
         // this.login();
         this.props.navigation.navigate('Test');
+    };
+
+    handleArcface = () => {
+        NativeModules.Arcface.goArcfaceScreen();
     };
 
     render() {
@@ -163,7 +168,7 @@ class Login extends React.Component {
                         <TouchableOpacity
                             style={styles.fingerprint}
                             onPress={this.handleFingerprintShowed}>
-                            <Text style={{color: 'red', fontSize: 15, textAlign: 'center'}}>指纹登陆</Text>
+                            <Text style={{color: 'red', fontSize: 25, textAlign: 'center'}}>指纹登陆</Text>
                         </TouchableOpacity>
 
                         {popupShowed && (
@@ -175,6 +180,14 @@ class Login extends React.Component {
                                 }}
                             />
                         )}
+
+                        {/*面部识别*/}
+                        <TouchableOpacity
+                            style={styles.fingerprint}
+                            onPress={this.handleArcface}>
+                            <Text style={{color: 'red', fontSize: 25, textAlign: 'center'}}>面部识别</Text>
+                        </TouchableOpacity>
+
                     </View>
                 </ImageBackground>
             </KeyboardAwareScrollView>
