@@ -1,6 +1,8 @@
 package com.project.arcface.activity;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -20,7 +22,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.project.MainActivity;
 import com.project.R;
+import com.project.arcface.common.CheckInfo;
 import com.project.arcface.faceserver.CompareResult;
 import com.project.arcface.faceserver.FaceServer;
 import com.project.arcface.model.DrawInfo;
@@ -64,6 +68,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RegisterAndRecognizeActivity extends BaseActivity implements ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = "RegisterAndRecognize";
+
+
     private static final int MAX_DETECT_NUM = 10;
     /**
      * 当FR成功，活体未成功时，FR等待活体的时间
@@ -539,6 +545,12 @@ public class RegisterAndRecognizeActivity extends BaseActivity implements ViewTr
                             String result = success ? "register success!" : "register failed!";
                             showToast(result);
                             registerStatus = REGISTER_STATUS_DONE;
+                            //注册成功
+                            SharedPreferences.Editor editor = getSharedPreferences("name",MODE_PRIVATE).edit();
+                            editor.putBoolean("register",true);
+                            editor.apply();
+                            Intent intent = new Intent(RegisterAndRecognizeActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -572,6 +584,12 @@ public class RegisterAndRecognizeActivity extends BaseActivity implements ViewTr
                 }
                 if (recognizeStatus == RequestFeatureStatus.SUCCEED) {
                     color = RecognizeColor.COLOR_SUCCESS;
+                    // 识别成功
+                    SharedPreferences.Editor editor = getSharedPreferences("name",MODE_PRIVATE).edit();
+                    editor.putBoolean("recognize",true);
+                    editor.apply();
+                    Intent intent = new Intent(RegisterAndRecognizeActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
             if (liveness != null && liveness == LivenessInfo.NOT_ALIVE) {

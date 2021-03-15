@@ -2,6 +2,8 @@ package com.project;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
@@ -50,6 +52,10 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+     SharedPreferences.Editor editor = getSharedPreferences("name",MODE_PRIVATE).edit();
+      editor.putBoolean("register",false);
+      editor.putBoolean("recognize",false);
+     editor.apply();
   }
 
   /**

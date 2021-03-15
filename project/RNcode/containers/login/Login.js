@@ -14,6 +14,7 @@ import {
     ScrollView,
     TouchableHighlight, AppState, Image,
     NativeModules,
+    DeviceEventEmitter,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
@@ -72,6 +73,7 @@ class Login extends React.Component {
         this.setState({appState: nextAppState});
     };
 
+
     onPress = () => {
         // this.login();
         this.props.navigation.navigate('Test');
@@ -81,9 +83,34 @@ class Login extends React.Component {
         NativeModules.Arcface.goArcfaceScreen();
     };
 
+    // 判断面部识别是否成功
+    checkRecognize = () => {
+        NativeModules.Arcface.checkrecognize((error) => {
+            console.log(error);
+        }, (isRecognize) => {
+            if (isRecognize) {
+                this.onPress();
+            } else {
+                console.log("识别失败")
+            }
+        });
+    };
+
+    // 判断注册面部识别是否成功
+    checkRegister = () => {
+        NativeModules.Arcface.checkregister((error) => {
+            console.log(error);
+        }, (isRegister) => {
+            if (isRegister) {
+                alert('注册成功，将本地账号绑定')
+            } else {
+                alert('注册失败')
+            }
+        });
+    };
+
     render() {
         const {errorMessage, biometric, popupShowed} = this.state;
-
         return (
             <KeyboardAwareScrollView
                 resetScrollToCoords={{x: 0, y: 0}}
@@ -187,6 +214,9 @@ class Login extends React.Component {
                             onPress={this.handleArcface}>
                             <Text style={{color: 'red', fontSize: 25, textAlign: 'center'}}>面部识别</Text>
                         </TouchableOpacity>
+                        {
+                            this.checkRecognize()
+                        }
 
                     </View>
                 </ImageBackground>
